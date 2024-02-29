@@ -146,7 +146,17 @@ class BinarySearchTree {
 
   countLeaves(count = 0) {
     // your solution here
-    return count;
+
+    if (!this.left && !this.right) return count + 1;
+    const newCount = count + 1;
+
+    if (!this.left) return this.right.countLeaves(newCount);
+    if (!this.right) return this.left.countLeaves(newCount);
+
+    const leftCount = this.left.countLeaves(newCount);
+    const rightCount = this.right.countLeaves(newCount);
+
+    return Math.max(leftCount, rightCount);
   }
 
   isBalancedBST() {
