@@ -159,9 +159,25 @@ class BinarySearchTree {
     return Math.max(leftCount, rightCount);
   }
 
-  isBalancedBST() {
+  isBalancedBST(currentHeight = 0) {
     // your solution here
-    return 0;
+
+    if (!this.left && !this.right) return currentHeight;
+
+    const newHeight = currentHeight + 1;
+
+    if (!this.left) return this.right.getHeight(newHeight);
+
+    if (!this.right) return this.left.getHeight(newHeight);
+
+    const leftHeight = this.left.getHeight(newHeight);
+    const rightHeight = this.right.getHeight(newHeight);
+
+    const taller = Math.max(leftHeight, rightHeight);
+    const shorter = Math.min(leftHeight, rightHeight);
+    const diff = taller - shorter;
+
+    return diff >= -1 && diff <= 1 ? taller : -1;
   }
 
   _replaceWith(node) {
